@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 module.exports = router;
-
+//module.exports = router;
 
 router.post('/:id', (req, res) => {
     pool.query('UPDATE "user" SET name = $1 WHERE id = $2', [req.body.name, req.params.id]).then(result => {

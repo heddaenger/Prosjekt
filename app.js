@@ -5,8 +5,11 @@ app.listen(3050, () => {
     console.log('listening');
 });
 
+const router = require("./routes/users");
+const pool = require("./public");
+
 app.use(express.static('public'));
-app.use('/users', require('./routes/users')); //forteller at alle router som starter med /users skal håndteres av våres router fra routes/users.js
+app.use('/users', router); //forteller at alle router som starter med /users skal håndteres av våres router fra routes/users.js
 
 //en route som henter alle brukere i databasen
 router.get("/:id", (req, res) => {
