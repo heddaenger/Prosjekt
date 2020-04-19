@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "dependencies": {
     "express": "^4.17.1",
-    "pg": "^8.0.2"
+    "pg": "^8.0.2",
+    "body-parser": "latest"
   },
-  "main": "index.js",
-  "devDependencies": {},
+  "main": "public/index.js",
+  "devDependencies": {
+    "cookie-parser": "^1.4.5",
+    "jsonwebtoken": "^8.5.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
