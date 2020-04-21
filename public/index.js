@@ -5,7 +5,7 @@ const pool = new Pool({
     port: 5432,
     user: 'postgres',
     database: 'postgres',
-    password: 'balto0421',
+    password: 'postgres',
 });
 
 pool.query('SELECT NOW()').then(result => {
@@ -14,4 +14,24 @@ pool.query('SELECT NOW()').then(result => {
 });
 
 module.exports = pool;
+
+//Hvorfor bruke pool og ikke client?
+
+/*
+const {Client} = require ('pg')
+const client = new Client ({
+    host: 'localhost',
+    port: 5432,
+    user: 'postgres',
+    database: 'postgres',
+    password: 'postgres',
+});
+
+client.connect()
+.then(() => console.log ("Connected succesfully"));
+.then(() => client.query("Select * from employees")):
+.then(results => console.table(results.rows);
+.cath(e => console.log(e));
+.finally(() => client.end));
+ */
 

@@ -1,3 +1,4 @@
+
 pool.query(`
 CREATE TABLE Users (
 userID INTEGER PRIMARY KEY, 
