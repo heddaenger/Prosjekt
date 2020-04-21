@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LoginPage</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+<br>
+<p>Are you an admin? Click<a href="../Admin/AdminLogin.html"> here</a> </p>
+
+<script src="Users.js"></script>
+
+<div class="login-page">
+    <div class="form">
+        <form class="register-form">
+            <h1>Login</h1>
+            <input id = "enteredName" type="email" placeholder="E-mail" value=""/>
+            <input id ="enteredPassword" type="password" placeholder="Password" value=""/>
+
+            <div id = sm></div>
+
+            <button id="loginUserbtn" type="submit" onclick="return checkIfLoginIsCorrect1()">login</button>
+
+            <p class="message">&nbsp Not Registered?<a href="CreateUser.html">Register</a> </p>
+        </form>
+
+
+    </div>
+</div>
+
+<script>
+    if(form_valid) {
+        const user = new user (fullName, email, password, phone);
+        fetch('http://localhost:3050/register' {
+            method: 'POST',
+
+        })
+    }
+</script>
+
+
+</body>
+</html>

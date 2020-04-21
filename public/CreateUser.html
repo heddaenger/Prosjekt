@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script src="Users.js"></script>
+</head>
+<body>
+
+
+
+<div class="login-page">
+    <div class="form">
+        <form class="register-form" name="Form">
+            <h1>Create an account</h1>
+
+            <span id = "fullNameValidation" style="color: red"></span>
+            <input id = "fullName" type="text" placeholder="Full name" value=""/>
+
+            <span id = "emailValidation" style="color: red"></span>
+            <input id = "email" type="email" placeholder="Email" value=""/>
+
+            <span id = "passwordValidation" style="color: red"></span>
+            <input id ="password" type="password" placeholder="Password" value=""/>
+
+            <span id = "phoneValidation" style="color: red"></span>
+            <input id = "phoneNumber" type="text" placeholder="Phone number" value=""/>
+
+
+
+
+            <button id="createUserbtn" type="submit" value="Register" onclick="return addUserInfo()">create</button>
+
+            <p class="message">&nbsp;Already Registered?<a href="loginPage.html">Login</a> </p>
+        </form>
+
+
+    </div>
+</div>
+
+</body>
+</html>

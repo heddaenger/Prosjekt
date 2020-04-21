@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyPage</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script>
+        if (sessionStorage.getItem("loggedIn") === "true") {
+            console.log("logged in")
+        } else {
+            window.location.replace("loginPage.html");
+        }
+    </script>
+</head>
+<body onload="displayInfo()">
+<script src="../Booking/Booking.js"></script>
+
+<h1>Your bookings:</h1>
+
+<div id = bookingDIV>
+
+    <table>
+
+
+
+        <tbody id="myList1">
+        <tr>
+
+            <th data-field="numberOfPersons">Order:</th>
+            <th data-field="numberOfPersons">Persons:</th>
+            <th data-field="dateOfBooking">Date:</th>
+            <th data-field="timeOfBooking">Time:</th>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</br>
+</br>
+
+<button onclick = "deleteBooking()">Delete booking</button>
+<input id = "deleteB" type="text" placeholder="type in order number">
+
+</br>
+</br>
+<h1>Your information:</h1>
+<table>
+
+
+
+    <tbody id="myInformation">
+    <tr>
+
+        <th data-field="numberOfPersons">Full name</th>
+        <th data-field="numberOfPersons">Email</th>
+        <th data-field="dateOfBooking">Phone:</th>
+
+    </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+<a href="Index.html">Back to menu</a>
+</body>
+</html>
