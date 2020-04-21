@@ -2,11 +2,11 @@
   "name": "secondtest",
   "version": "1.0.0",
   "dependencies": {
+    "body-parser": "latest",
     "express": "^4.17.1",
-    "pg": "^8.0.2",
-    "body-parser": "latest"
+    "pg": "^8.0.2"
   },
-  "main": "public/index.js",
+  "main": "routes/index.js",
   "devDependencies": {
     "cookie-parser": "^1.4.5",
     "jsonwebtoken": "^8.5.1"

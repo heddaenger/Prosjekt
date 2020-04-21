@@ -1,6 +1,6 @@
 window.onload = function() {
-    const form = document.getElementById('profileform');
-    const name = document.getElementById('profilename');
+    const form = document.getElementById('profileForm');
+    const name = document.getElementById('profileName');
 
     fetch ('/users/me')
         .then(response => response.json())

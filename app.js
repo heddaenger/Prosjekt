@@ -6,7 +6,7 @@ app.listen(3050, () => {
 });
 
 const router = require("./routes/users");
-const pool = require("./public");
+const pool = require("./routes");
 
 app.use(express.static('public'));
 app.use('/users', router); //forteller at alle router som starter med /users skal håndteres av våres router fra routes/users.js
