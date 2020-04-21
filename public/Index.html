@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <script src="Users.js"></script>
+    <script>
+        if (sessionStorage.getItem("loggedIn") === "true") {
+            console.log("logged in")
+
+        } else {
+            window.location.replace("loginPage.html");
+        }
+    </script>
+</head>
+<body>
+
+
+
+<h1>Welcome</h1>
+<p>Here you are able to view your userinformation and bookings. You can also make a booking if you would like!</p>
+
+<h2>Menu</h2>
+
+<a href="MyPage.html">View your information and bookings</a>
+<br>
+<br>
+<a href="../Booking/BookingPage.html">Make a booking</a>
+<br>
+<br>
+<button type="submit" onclick="logout()">Log out</button>
+
+
+
+
+
+
+
+
+</body>
+</html>
