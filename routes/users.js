@@ -38,5 +38,5 @@ router.get('/me', (req,res) => {
     res.json(req.user);
 });
 
-const pool = require('../public');
+const pool = require('./index');
 

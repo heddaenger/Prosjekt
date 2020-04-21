@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking page</title>
+
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script>
+        if (sessionStorage.getItem("loggedIn") === "true") {
+            console.log("logged in")
+        } else {
+            window.location.replace("loginPage.html");
+        }
+    </script>
+</head>
+<body>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="Booking.js"></script>
+
+<h2>Make a booking</h2>
+<br>
+
+<p>How many persons are you?</p>
+<select id = "tableSeats">
+    <option value="1">1 person</option>
+    <option value="2">2 persons</option>
+    <option value="3">3 persons</option>
+    <option value="4">4 persons</option>
+    <option value="5">5 persons</option>
+    <option value="6">6 persons</option>
+    <option value="7">7 persons</option>
+    <option value="8">8 persons</option>
+
+</select>
+
+<br>
+<br>
+
+
+<p>Choose date:</p>
+
+<div class="date-picker">
+    <div id ="datestring" class="selected-date" data-value=""></div>
+    <div id = "dateValue" class="dates">
+        <div class="month">
+            <div class="arrows prev-mth">&lt;</div>
+            <div class="mth"></div>
+            <div class="arrows next-mth">&gt;</div>
+        </div>
+       <div class="days"></div>
+    </div>
+</div>
+
+<br>
+
+<p>Choose time:</p>
+<form>
+<select id = "time">
+    <option value="17:00">17:00</option>
+    <option value="17:15">17:15</option>
+    <option value="17:30">17:30</option>
+    <option value="17:00">17:45</option>
+    <option value="18:00">18:00</option>
+    <option value="18:15">18:15</option>
+    <option value="18:30">18:30</option>
+    <option value="18:45">18:45</option>
+    <option value="19:00">19:00</option>
+    <option value="19:15">19:15</option>
+    <option value="19:30">19:30</option>
+    <option value="19:45">19:45</option>
+    <option value="20:00">20:00</option>
+    <option value="20:15">20:15</option>
+    <option value="20:30">20:30</option>
+    <option value="20:45">20:45</option>
+    <option value="21:00">21:00</option>
+
+</select>
+</form>
+<br>
+<br>
+
+<button type="submit" onclick="return setBooking()">Make booking</button>
+<br>
+<br>
+<a href="../User/Index.html">Back to menu</a>
+<script src="Calendar.js"></script>
+
+
+</body>
+</html>
+
+</body>
+</html>

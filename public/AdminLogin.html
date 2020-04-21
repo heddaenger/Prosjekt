@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login Page</title>
+</head>
+<body onload="storeLogin()">
+
+<script src="Admin.js"></script>
+
+
+
+<div class="login-page">
+    <div class="form">
+        <h1>AdminLogin</h1>
+
+        <p>Welcome to the adminpage! Contact IT and services if you are unable to log-in</p>
+
+
+        <input id ="nameInput" type="text" placeholder="Username" value=""/>
+        <input id ="passwordInput" type="password" placeholder="Password" value=""/>
+
+        <button id="loginAdminBtn" type="submit" onclick="return checkIfAdminLoginIsCorrect()">login</button>
+
+</body>
+</html>
+
