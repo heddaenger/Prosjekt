@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 module.exports = router;
-//module.exports = router;
+
 
 router.post('/:id', (req, res) => {
-    pool.query('UPDATE "user" SET name = $1 WHERE id = $2', [req.body.name, req.params.id]).then(result => {
+    pool.query('UPDATE "Users" SET fullName = $1 WHERE id = $2', [req.body.fullName, req.params.id]).then(result => {
         res.redirect('profile.html'); //når brukeren er oppdatert i databasen skal browseren sendes tilbake til profile.html siden
     })
 });
@@ -25,7 +25,7 @@ router.use((req, res, next) => {
         const decoded = jwt.verify(req.cookies['jwt-token'],
             secret);
 
-        pool.query('SELECT * FROM "user" WHERE id=$1', [decoded.user_id]).then(result => {
+        pool.query('SELECT * FROM "Users" WHERE id=$1', [decoded.user_id]).then(result => {
             req.user = result.rows[0];
             next();
         });
