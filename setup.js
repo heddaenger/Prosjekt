@@ -1,10 +1,10 @@
-
+const pool = require ('./routes/index');
 pool.query(`
 CREATE TABLE Users (
 id SERIAL PRIMARY KEY, 
-fullName text VARCHAR (100) NOT NULL, 
-email text VARCHAR (100) NOT NULL, 
-password text VARCHAR (50) NOT NULL, 
+fullName text NOT NULL, 
+email text NOT NULL, 
+password text NOT NULL, 
 phone INT NOT NULL); 
 
 CREATE TABLE Booking (
@@ -16,12 +16,12 @@ Users_id INTEGER REFERENCES Users(id) ON DELETE CASCADE);
 
 CREATE TABLE AdminUser (
 id SERIAL PRIMARY KEY, 
-adminUsername text VARCHAR (50) NOT NULL, 
-adminPassword text VARCHAR (50) NOT NULL); 
+adminUsername text NOT NULL, 
+adminPassword text NOT NULL); 
 
-INSERT INTO TABLE Users(...) VALUES (...);
+
 
 `).then(result => {
-    console.log(error, result);
+    console.log(result);
 });
 
