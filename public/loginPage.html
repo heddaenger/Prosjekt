@@ -9,18 +9,19 @@
 <br>
 <p>Are you an admin? Click<a href="../Admin/AdminLogin.html"> here</a> </p>
 
-<script src="Users.js"></script>
+<script src="/routes/users.js"></script>
+<script src="/login.js"></script>
 
 <div class="login-page">
     <div class="form">
-        <form class="register-form">
+        <form class="register-form" action="/login" method="post">
             <h1>Login</h1>
-            <input id = "enteredName" type="email" placeholder="E-mail" value=""/>
-            <input id ="enteredPassword" type="password" placeholder="Password" value=""/>
+            <input id = "enteredName" type="email" placeholder="E-mail" value="" name="email" />
+            <input id ="enteredPassword" type="password" placeholder="Password" value="" name="password"/>
 
             <div id = sm></div>
 
-            <button id="loginUserbtn" type="submit" onclick="return checkIfLoginIsCorrect1()">login</button>
+            <button id="loginUserbtn" type="submit" value="Submit">Login</button>
 
             <p class="message">&nbsp Not Registered?<a href="CreateUser.html">Register</a> </p>
         </form>
@@ -29,15 +30,6 @@
     </div>
 </div>
 
-<script>
-    if(form_valid) {
-        const user = new user (fullName, email, password, phone);
-        fetch('http://localhost:3050/register' {
-            method: 'POST',
-
-        })
-    }
-</script>
 
 
 </body>
