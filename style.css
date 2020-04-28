@@ -1,0 +1,188 @@
+
+.login-page {
+    width: 50%;
+    margin: 3% 20% 0% 25%;
+    padding: 10%, 0, 0;
+}
+
+.form {
+    position: relative;
+    font-family: "Calibri";
+    z-index: 1;
+    background: whitesmoke;
+    margin: auto;
+    padding: 10%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.form input {
+    font-family: "roboto", sans-serif;
+    outline: 1;
+    background: white;
+    width: 100%;
+    border: 1px;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.form button {
+    font-family: "roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 1px;
+}
+
+.form button:hover,.form button:active {
+   background: #43A047;
+}
+
+.form .message {
+    margin:15px 0 0;
+    color: black;
+    text-decoration: none;
+}
+
+.form .message a {
+    text-decoration:noe;
+}
+
+.login-form span {
+    text-decoration: none;
+}
+
+.form .register-form {
+    display: ;
+}
+
+#demo {
+    color: red;
+    margin: 15px 0 0;
+}
+
+#span {
+    color: red;
+}
+
+td {
+    padding: 10px 55px 10px 10px;
+    border-bottom: solid 1px;
+
+}
+
+tr {
+    padding: 10px 55px 10px 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: white;
+
+
+}
+
+#selected-date {
+    width: 100%;
+    text-align: left;
+    border: 1px solid;
+}
+
+.date-picker {
+    position: relative;
+
+    /*float: left;*/
+    width: 100%;
+    max-width: 220px;
+    height: 30px;
+ border: solid 1px rgb(0, 0, 0, 0.1);
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.date-picker:hover {
+    background-color: #F3F3F3;
+}
+
+.date-picker .selected-date {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #313131;
+    font-size: 18px;
+}
+
+.date-picker .dates {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    background-color: #FFF;
+    border: solid 1px rgba(0, 0, 0, 0.1);
+}
+
+.date-picker .dates.active {
+    display: block;
+}
+
+.date-picker .dates .month {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #EEE;
+
+}
+
+.date-picker .dates .month .arrows {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #313131;
+    font-size: 20px;
+}
+
+.date-picker .dates .month .arrows:hover {
+    background-color: #F3F3F3;
+}
+
+.date-picker .dates .month .arrows:active {
+    background-color: #00CA85;
+}
+
+.date-picker .dates .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    height: 200px;
+}
+.date-picker .dates .days .day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #313131;
+    border: solid 0.1px rgba(0, 0, 0, 0.1);
+}
+.date-picker .dates .days .day.selected {
+    background-color: #00CA85;
+}
