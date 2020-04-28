@@ -1,9 +1,10 @@
+const pool = require('./routes/index');
 pool.query(`
 CREATE TABLE Users (
 id SERIAL PRIMARY KEY, 
-fullName text VARCHAR (100) NOT NULL, 
-email text VARCHAR (100) NOT NULL, 
-password text VARCHAR (50) NOT NULL, 
+fullName text NOT NULL, 
+email text NOT NULL, 
+password text NOT NULL, 
 phone INT NOT NULL); 
 
 CREATE TABLE Booking (

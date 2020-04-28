@@ -1,8 +1,11 @@
+//Legge til express-modulen for filen
 const express = require('express');
 const app = express();
 
-app.listen(3050, () => {
-    console.log('listening');
+
+//Koble til server
+app.listen(3000, () => {
+    console.log('listening on 3000');
 });
 
 const router = require("./routes/users");
@@ -23,3 +26,13 @@ app.use(bodyParser.urlencoded({ extended: false}));
 
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
+
+
+
+
+
+/*app.post('/api', (req, res) => {
+    console.log(req.body);
+    res.send('POST request to the homepage')
+});
+*/
