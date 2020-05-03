@@ -94,7 +94,7 @@ function setBooking() {
 }
 
 //Function that allows user to delete a booking
-function deleteBooking() {
+/*function deleteBookingOld() {
 
         let bookings = JSON.parse(localStorage.getItem("bookings"));
         let iName = document.getElementById("deleteB").value;
@@ -255,3 +255,5 @@ function displayInfo() {
     myInformation();
     myBookings();
 }
+
+ */

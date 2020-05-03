@@ -7,14 +7,14 @@
 </head>
 <body>
 <br>
-<p>Are you an admin? Click<a href="../Admin/AdminLogin.html"> here</a> </p>
+
 
 <script src="/routes/users.js"></script>
 <script src="/login.js"></script>
 
 <div class="login-page">
     <div class="form">
-        <form class="register-form" action="/login" method="post">
+        <form class="register-form" action="/users/login" method="post">
             <h1>Login</h1>
             <input id = "enteredName" type="email" placeholder="E-mail" value="" name="email" />
             <input id ="enteredPassword" type="password" placeholder="Password" value="" name="password"/>
@@ -23,7 +23,7 @@
 
             <button id="loginUserbtn" type="submit" value="Submit">Login</button>
 
-            <p class="message">&nbsp Not Registered?<a href="CreateUser.html">Register</a> </p>
+            <p class="message">&nbsp Not Registered?<a href="registration.html">Register</a> </p>
         </form>
 
 

@@ -4,7 +4,10 @@
   "dependencies": {
     "body-parser": "latest",
     "express": "^4.17.1",
-    "pg": "^8.0.2"
+    "node": "^14.0.0",
+    "node-fetch": "^2.6.0",
+    "pg": "^8.0.2",
+    "pool": "^0.4.1"
   },
   "main": "routes/index.js",
   "devDependencies": {
