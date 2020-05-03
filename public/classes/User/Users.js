@@ -1,52 +1,17 @@
 //The following code contains all classes and functions allowing the customer to create and store a new user and login
 
 //Defining a class with a constructor holding attributes that make up an object of the class
-class User {
-    constructor(fullName, email, password, phone) {
-        this.fullName = fullName;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-    }
-}
 
-
-function createAUser(){
-    const user = new User (this.fullName, this.email, this.password, this.phone);
-    fetch('http://localhost:3050/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user).then(r => r)
-    }).then(response => response.json())
-
-        .then(json => {
-            if (!json.ok){
-                console.log(json);
-                alert(json);
-            } else if (json.ok === true){
-                console.log(json.ok);
-                window.location = 'http://localhost:3050/loginPage.html';
-            }
-        })}
-
-
-        const result = await fetch("http://localhost:3050/registration", {method:"POST",
-        headers: {"content-type" : "application/json"}, body: JSON.stringify(json)})
-    const success = await result.json()
-    alert("created!")
-});
 
 //const btnCreate = document.getElementById("btnCreate");
 //btnCreate.addEventListener("click", async e=> {
 
 //Adding method to class that creates alert when called for an object
-  createAlert() {
+  createAlert();{
         return "Hi " + document.getElementById("fullName").value + " you have been registered";
     }
 
-}
+
 
 //The following function is meant to instatiate a new object of class and stores that object to localstorage.
 function addUserInfo () {
