@@ -7,6 +7,8 @@ const secret = 'verysecret';
 const pool = require(".");
 
 
+
+//
 router.use((req, res, next) => {
     if (req.cookies && req.cookies['jwt-token']) {
         const decoded = jwt.verify(req.cookies['jwt-token'], secret);
@@ -20,6 +22,8 @@ router.use((req, res, next) => {
 });
 
 
+
+//Henter alle brukerne i databasen og sender de som JSON-objekter
 router.get("/", async(req, res) => {
     const rows = await readUsers();
     res.setHeader("content-type", "application/json");
@@ -27,7 +31,9 @@ router.get("/", async(req, res) => {
 });
 
 
-//prøver å bruke funksjonen createUsers til å lagre brukeren.
+
+/*Bruker funksjonen createUsers til å lagre brukeren i DB. Dersom det er en admin logget inn og brukeren requester å bli admin,
+kan adminen godkjenne dette og gjøre brukeren til admin. */
 router.post("/", async(req, res) => {
     try{
         const user = req.user;
@@ -77,7 +83,7 @@ router.post('/login', async(req, res) => {
 });
 
 
-
+//dette endpointet henter informasjonen om hver enkelt bruker. Denne informasjonen innbærer ikke passord eller id.
 router.get('/me', async (req,res) =>{
         const user = req.user;
         delete user.id;
@@ -87,7 +93,7 @@ router.get('/me', async (req,res) =>{
 
 
 
-
+//dette endpointet bruker funksjonen createBooking til å lagre bookings i DB.
 router.post("/booking", async(req, res) => {
     try{
         const user = req.user;
@@ -102,7 +108,7 @@ router.post("/booking", async(req, res) => {
 });
 
 
-
+//Henter bookings fra DB og viser brukeren hvilke bookings de har.
 router.get("/booking", async(req, res) => {
     const user_id = req.user.id;
     const rows = await readBooking(user_id);
@@ -111,19 +117,24 @@ router.get("/booking", async(req, res) => {
 });
 
 
+
+//Henter alle bookingsene i DB for å vise dem til adminen. Dersom noen som ikke er admins er på siden vil de få en 403.
 router.get("/allBookings", async(req, res) => {
- const user = req.user;
- const usertype = user.usertype;
- if(usertype === 1){
-     const rows = await readAllBookings();
-     res.setHeader("content-type", "application/json");
-    res.send(JSON.stringify(rows))
- } else if(usertype === 2){
-    res.status(403).send("Not allowed");
- }
-   });
+         const user = req.user;
+         const usertype = user.usertype;
+     if(usertype === 1){
+         const rows = await readAllBookings();
+         res.setHeader("content-type", "application/json");
+         res.send(JSON.stringify(rows))
+     }
+     else if(usertype === 2){
+         res.status(403).send("Not allowed");
+    }
+});
 
 
+
+//Sletter bookings i DB
 router.delete("/booking", async(req, res) => {
     let result = {};
     try {
@@ -140,6 +151,7 @@ router.delete("/booking", async(req, res) => {
         res.send(JSON.stringify(result))
     }
 });
+
 
 
 router.delete("/", async (req, res) =>{
@@ -159,6 +171,8 @@ router.delete("/", async (req, res) =>{
         res.send(JSON.stringify(result))
     }
 });
+
+
 
 //Hvorfor result.success = true ?
 router.delete("/me", async(req, res) => {
