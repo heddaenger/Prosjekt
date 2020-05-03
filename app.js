@@ -92,6 +92,7 @@ async function createUsers(user){
         return true;
     } catch (e) {
       console.log(`${e}`);
+
     }
 }
 
