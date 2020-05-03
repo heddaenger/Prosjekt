@@ -54,7 +54,6 @@ async function showUser(){
 async function manageAllBookings() {
     try{
         const allBookings = document.getElementById("allBookings");
-
         const result = await fetch("http://localhost:3000/users/allBookings", {method:"GET", mode: 'no-cors'});
         const aBInformation = await result.json();
         aBInformation.forEach(t=>{
@@ -127,8 +126,45 @@ catch (e){
     }
 }
 
-//module.exports - liten forklaring
+async function manageUser(){
+    try{
+    const myUser = document.getElementById("manageUser");
+    const result = await fetch("http://localhost:3000/users/me", {method:"GET", mode: 'no-cors'});
+    const myInformation = await result.json();
+
+    myInformation.forEach(t => {
+        const row = myUser.insertRow(-1);
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        const cell3 = row.insertCell(2);
+        const cell4 = row.insertCell(3);
+        cell1.innerHTML = t.fullname;
+        cell2.innerHTML = t.email;
+        cell3.innerHTML = t.phone;
+        const button = document.createElement("button");
+        cell4.appendChild(button);
+        button.addEventListener("click", async e => {
+            const jsonRequest = {};
+            jsonRequest.id = t.id;
+            const result = await fetch("http://localhost:3000/users/me", {
+                method: "DELETE",
+                headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest)
+            });
+            const success = await result.json();
+            await manageUser();
+            location.reload();
+        });
+    })
+}
+catch (e){
+    console.log(`Error reading the users.${e}`)
+}
+}
+
+
 module.exports.showUser = showUser;
 module.exports.bookingAdmin = bookingAdmin;
 module.exports.manageAllBookings = manageAllBookings;
 module.exports.manageAllUsers = manageAllUsers;
+module.exports.manageUser = manageUser;
+

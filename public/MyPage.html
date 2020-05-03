@@ -7,6 +7,7 @@
     <script>
         function on_load() {
             bookingAdmin();
+            manageUser();
             showUser();
         };
     </script>
@@ -38,12 +39,20 @@
 </br>
 </br>
 
-<div id="myInformation"></div>
+<table id = "manageUser">
+    <tr>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Delete</th>
+    </tr>
+
+</table>
 
 <br>
 
-
-
+<p>Delete user: </p>
+<div id="deleteButton"></div>
 <br>
 <br>
 <a href="Index.html">Back to menu</a>
