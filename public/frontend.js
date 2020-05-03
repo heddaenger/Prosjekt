@@ -167,3 +167,4 @@ module.exports.bookingAdmin = bookingAdmin;
 module.exports.manageAllBookings = manageAllBookings;
 module.exports.manageAllUsers = manageAllUsers;
 module.exports.manageUser = manageUser;
+
