@@ -35,6 +35,7 @@ router.post("/", async(req, res) => {
 
         if (user.usertype === 1 && req.body.make_admin === "is_admin") {
             new_user.usertype = 1;
+
         } else {
             new_user.usertype = 2
         }
@@ -176,12 +177,6 @@ router.delete("/me", async(req, res) => {
         res.send(JSON.stringify(result));
     }
 });
-
-
-
-
-
-
 
 
 
