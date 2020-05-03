@@ -3,30 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Page</title>
-    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script src = "/frontend.js"> </script>
+    <script>
+        function on_load() {
+            showAllBookings();
+            showAllUsers();
+        };
+    </script>
 
 
 </head>
-<body onload="displayInfo()">
-<script src="AllBookings.js"></script>
+<body onload = "on_load()">
 
 <h1>All bookings:</h1>
 
-<div id = bookingDIV>
-
-    <table>
-        <tbody id="adminTable">
+    <table id = "allBookings">
         <tr>
-
-            <th data-field="numberOfPersons">Order:</th>
-            <th data-field="numberOfPersons">Persons:</th>
-            <th data-field="dateOfBooking">Date:</th>
-            <th data-field="timeOfBooking">Time:</th>
-            <th data-field="timeOfBooking">User:</th>
-
+            <th>Booking number</th>
+            <th>Seats chosen</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Delete</th>
         </tr>
-        </tbody>
+
     </table>
+
 
 
 
@@ -42,21 +43,18 @@
 </br>
 </br>
 <h1>All Users:</h1>
-<table>
 
-
-
-    <tbody id="myInformation">
+<table id = "allUsers">
     <tr>
-
-        <th data-field="numberOfPersons">Full name</th>
-        <th data-field="numberOfPersons">Email</th>
-        <th data-field="dateOfBooking">Phone:</th>
-
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Delete</th>
     </tr>
-    </tbody>
+
 </table>
 
-
+</div>
 
 </body></html>

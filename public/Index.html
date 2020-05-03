@@ -3,15 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Menu</title>
-    <script src="Users.js"></script>
-    <script>
-        if (sessionStorage.getItem("loggedIn") === "true") {
-            console.log("logged in")
 
-        } else {
-            window.location.replace("loginPage.html");
-        }
-    </script>
+
+
 </head>
 <body>
 
@@ -25,7 +19,7 @@
 <a href="MyPage.html">View your information and bookings</a>
 <br>
 <br>
-<a href="../Booking/BookingPage.html">Make a booking</a>
+<a href="booking.html">Make a booking</a>
 <br>
 <br>
 <button type="submit" onclick="logout()">Log out</button>

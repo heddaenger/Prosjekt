@@ -3,59 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>MyPage</title>
-    <link rel="stylesheet" type="text/css" href="../style.css">
-</head>
-<body onload="displayInfo()">
-<script src="../Booking/Booking.js"></script>
+    <script src = "/frontend.js"> </script>
+    <script>
+        function on_load() {
+            bookingAdmin();
+            showUser();
+        };
+    </script>
+
+        </head>
+<body onload="on_load()">
 
 <h1>Your bookings:</h1>
 
-<div id = bookingDIV>
+    <table id = "itemTable">
+    <tr>
+        <th>Booking number</th>
+        <th>Seats chosen</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Delete</th>
+    </tr>
 
-    <table>
-
-
-
-        <tbody id="myList1">
-        <tr>
-
-            <th data-field="numberOfPersons">Order:</th>
-            <th data-field="numberOfPersons">Persons:</th>
-            <th data-field="dateOfBooking">Date:</th>
-            <th data-field="timeOfBooking">Time:</th>
-
-        </tr>
-        </tbody>
     </table>
 
-</div>
+
+
+
 
 </br>
 </br>
 
-<button onclick = "deleteBooking()">Delete booking</button>
-<input id = "deleteB" type="text" placeholder="type in order number">
 
 </br>
 </br>
-<h1>Your information:</h1>
-<table>
+
+<div id="myInformation"></div>
+
+<br>
 
 
-
-    <tbody id="myInformation">
-    <tr>
-
-        <th data-field="numberOfPersons">Full name</th>
-        <th data-field="numberOfPersons">Email</th>
-        <th data-field="dateOfBooking">Phone:</th>
-
-    </tr>
-    </tbody>
-</table>
 
 <br>
 <br>
 <a href="Index.html">Back to menu</a>
+<br>
+<a href="booking.html">Make a booking</a>
 </body>
 </html>
