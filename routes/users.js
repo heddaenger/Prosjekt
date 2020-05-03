@@ -42,7 +42,8 @@ router.post("/", async(req, res) => {
 
     }
     catch(e){
-        result.success=false;
+        //result.success=false;
+    console.log(`${e}`);
     }
     finally{
         res.redirect('/loginPage.html');
@@ -158,6 +159,31 @@ router.delete("/", async (req, res) =>{
     }
 });
 
+//Hvorfor result.success = true ?
+router.delete("/me", async(req, res) => {
+    let result = {};
+    try {
+        const user = req.user;
+        await deleteUserDB(user.id);
+        result.success = true;
+        res.redirect("/registration.html")
+    }
+    catch(e){
+          result.success = false;
+    }
+    finally {
+        res.setHeader("content-type", "application/json");
+        res.send(JSON.stringify(result));
+    }
+});
+
+
+
+
+
+
+
+
 
 async function readUsers(){
     try{
@@ -176,9 +202,10 @@ async function createUsers(user) {
             [user.fname, user.email, user.password, user.phone, user.usertype]);
         return true;
     } catch (e) {
-        console.log(`${e}`);
+        //console.log("1");
     }
 }
+
 
 
 async function readBooking(user_id){
