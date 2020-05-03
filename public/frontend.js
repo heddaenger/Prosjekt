@@ -51,7 +51,7 @@ async function showUser(){
 
 
 
-async function showAllBookings() {
+async function manageAllBookings() {
     try{
         const allBookings = document.getElementById("allBookings");
 
@@ -77,7 +77,7 @@ async function showAllBookings() {
                 const result = await fetch("http://localhost:3000/users/allBookings", {method: "DELETE",
                     headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest)});
                 const success = await result.json();
-                await bookingAdmin();
+                await manageAllBookings();
                 console.log("reloading");
                 location.reload();
             });
@@ -90,7 +90,7 @@ async function showAllBookings() {
 
 
 
-async function showAllUsers() {
+async function manageAllUsers() {
     try{
         const allUsers = document.getElementById("allUsers");
         const result = await fetch("http://localhost:3000/users/", {method:"GET", mode: 'no-cors'});
@@ -117,7 +117,7 @@ async function showAllUsers() {
                     headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest)
                 });
                 const success = await result.json();
-                await showAllUsers();
+                await manageAllUsers();
                 location.reload();
             });
         })
@@ -127,8 +127,8 @@ catch (e){
     }
 }
 
-
+//module.exports - liten forklaring
 module.exports.showUser = showUser;
 module.exports.bookingAdmin = bookingAdmin;
-module.exports.showAllBookings = showAllBookings;
-module.exports.showAllUsers = showAllUsers;
+module.exports.manageAllBookings = manageAllBookings;
+module.exports.manageAllUsers = manageAllUsers;

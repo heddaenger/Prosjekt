@@ -27,4 +27,7 @@ userId INTEGER REFERENCES Users(id) ON DELETE CASCADE);
     console.log(result);
 });
 
+/*  Her lager vi setup til databasen i postgreSQL. Vi lager alle tabellene i databasen vår og så legger vi inn én hardcodet admin.
+    Denne adminen kan gjøre andre til admins dersom den selv er logget inn (koden til dette ligger i backenden vår users.js).
+ */
 
