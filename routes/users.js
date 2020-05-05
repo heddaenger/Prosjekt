@@ -36,15 +36,26 @@ router.get("/", async(req, res) => {
 kan adminen godkjenne dette og gjøre brukeren til admin. */
 router.post("/", async(req, res) => {
     try{
+        let is_admin_user = false;
+        try {
+            is_admin_user = req.user.usertype === 1;
+        } catch {
+        }
         const user = req.user;
         const new_user = req.body;
 
-        if (user.usertype === 1 && req.body.make_admin === "is_admin") {
+        if (is_admin_user && req.body.make_admin === "is_admin") {
             new_user.usertype = 1;
         } else {
             new_user.usertype = 2
         }
-        await createUsers(new_user);
+        const success = await createUsers(new_user);
+        if(success){
+            res.redirect('/loginPage.html');
+        }else {
+            res.send(JSON.stringify("Invalid phone number or email already in use"));
+        }
+        res.send({sucess: success});
 
     }
     catch(e){
@@ -81,12 +92,28 @@ router.post('/login', async(req, res) => {
     }
 });
 
+router.post('/logout', async(req,res) => {
+    try{
+        const user = req.user;
+        console.log(user.email);
+        console.log("working 1");
+        res.clearCookie('jwt-token');
+        console.log("working 2");
+        res.redirect('/loginPage.html');
+    } catch (e)   {
+        console.log("Woot!!");
+        res.status(403).send("User not logged in.");
+    }
+});
+
+
+
 
 //dette endpointet henter informasjonen om hver enkelt bruker. Denne informasjonen innbærer ikke passord eller id.
 router.get('/me', async (req,res) =>{
         const user = req.user;
-        delete user.id;
         delete user.password;
+        delete user.id;
         res.send(JSON.stringify(user));
 });
 
@@ -154,44 +181,51 @@ router.delete("/booking", async(req, res) => {
 
 
 router.delete("/", async (req, res) =>{
-    let result = {};
     try{
-        const booking = req.body;
+        const user_id = req.body.id;
         const user = req.user;
-        await deleteBookingDB(booking.id, user.id); 
-        await deleteUserDB(user.id);
-        result.success = true;
+        if (user.usertype !== 1) {
+            res.status(403).send("You do not have the privileges to delete users.");
+        }
+        await deleteUserDB(user_id);
+        res.send();
     }
-    catch(e){
-        console.log(`${e}`)
-    }
-    finally{
-        res.setHeader("content-type", "application/json");
-        res.send(JSON.stringify(result))
+    catch (e){
+        console.log(`${e}`);
+        res.status(500).send();
     }
 });
 
 
 
 //Hvorfor result.success = true ?
-router.delete("/me", async(req, res) => {
-    let result = {};
+/*router.delete("/me", async(req, res) => {
     try {
         const user = req.user;
         await deleteUserDB(user.id);
-        result.success = true;
         res.redirect("/registration.html")
     }
     catch(e){
-          result.success = false;
-    }
-    finally {
-        res.setHeader("content-type", "application/json");
-        res.send(JSON.stringify(result));
+          console.log(`${e}`);
     }
 });
+ */
 
 
+router.post("/me", async (req, res)=> {
+    try{
+     const user = req.body;
+     console.log(user);
+     user.id = req.user.id;
+     user.usertype = req.user.usertype;
+     console.log(user);
+     await updateUser(user);
+     res.send();
+    } catch (e){
+        console.log(`${e}`);
+    }
+
+});
 
 
 
@@ -212,14 +246,27 @@ async function readUsers(){
 //legger inn informasjonen i en database
 async function createUsers(user) {
     try {
+        console.log(user);
+        let status = false;
         await pool.query("INSERT INTO users (fullName, email, password, phone, usertype) VALUES ($1, $2, $3, $4, $5)",
-            [user.fname, user.email, user.password, user.phone, user.usertype]);
-        return true;
+            [user.fname, user.email, user.password, user.phone, user.usertype]).then(s => {status = true; console.log(s);})
+                                                                               .catch(e => {console.log(e);});
+        return status;
     } catch (e) {
-        //console.log("1");
+        return false;
     }
 }
 
+
+async function updateUser(user){
+    try {
+        await pool.query("UPDATE users SET fullName=($1), password=($2), phone=($3) WHERE id=($4)",
+            [user.fname, user.password, user.phone, user.id]);
+        return true;
+    } catch (e){
+        console.log(`${e}`);
+    }
+}
 
 
 async function readBooking(user_id){
@@ -282,9 +329,8 @@ async function readAllBookings(){
 
 async function deleteUserDB(id) {
     try{
-        pool.query('delete from users where id = ($1)', [id]).then(function(result) {
-
-            });
+        console.log(id);
+        await pool.query('delete from users where id = ($1)', [id]);
     }
     catch(e){
         console.log(`${e}`);

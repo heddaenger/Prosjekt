@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body onload="on_load()">
+<script src = "/frontend.js"> </script>
+<script>
+    function on_load(){
+        manageUser();
+    };
+</script>
+
+<div id="myInformation">
+
+</div>
+<br><br>
+<form id="update">
+    <label for="fullName">Your name:</label>
+    <input type="text" id="fullName" name="fname"><br><br>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password"><br><br>
+    <label for="phone">Phone</label>
+    <input type="number" id="phone" name="phone"><br><br>
+    <input type="submit" value="Submit" id="btnCreate">
+</form>
+
+<script>
+
+    const formMethod = document.getElementById("update");
+    var formData = new FormData(formMethod);
+    formMethod.onsubmit = (event) =>{
+        const data = {};
+        data.phone = document.getElementById("phone").value;
+        data.fname = document.getElementById("fullName").value;
+        data.password = document.getElementById("password").value;
+        console.log(data);
+
+        event.preventDefault();
+        fetch("http://localhost:3000/users/me", {
+            method: 'POST',
+            headers: {"content-type": "application/json"},
+            body: JSON.stringify(data)
+        }).then(response => console.log(response))
+    };
+</script>
+
+</body>
+</html>
