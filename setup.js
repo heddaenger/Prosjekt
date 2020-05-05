@@ -7,7 +7,7 @@ roletype text NOT NULL);
 CREATE TABLE Users (
 id SERIAL PRIMARY KEY, 
 fullName text NOT NULL, 
-email text NOT NULL, 
+email text UNIQUE NOT NULL, 
 password text NOT NULL, 
 phone INT NOT NULL, 
 userType INTEGER REFERENCES UserTypes(id) ON DELETE CASCADE); 
