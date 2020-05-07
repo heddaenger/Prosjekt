@@ -43,7 +43,7 @@ async function manageUser() {
 
     myDiv.innerHTML =
         "<h2>Your Information: </h2>" +
-        "<b>Your Name: </b> " + uInformation.fullname +
+        "<b>Your Name:</b> " + uInformation.fullname +
         "<br> <b>Your Phone: </b>" + uInformation.phone +
         "<br> <b> Your email: </b>" + uInformation.email;
 }
@@ -78,7 +78,6 @@ async function manageAllBookings() {
                     headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest)});
                 const success = await result.json();
                 await manageAllBookings();
-                console.log("reloading");
                 location.reload();
             });
         })
