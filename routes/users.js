@@ -46,6 +46,7 @@ router.post("/", async(req, res) => {
 
         if (is_admin_user && req.body.make_admin === "is_admin") {
             new_user.usertype = 1;
+
         } else {
             new_user.usertype = 2
         }
@@ -93,13 +94,9 @@ router.post('/login', async(req, res) => {
 router.post('/logout', async(req,res) => {
     try{
         const user = req.user;
-        console.log(user.email);
-        console.log("working 1");
         res.clearCookie('jwt-token');
-        console.log("working 2");
         res.redirect('/loginPage.html');
     } catch (e)   {
-        console.log("Woot!!");
         res.status(403).send("User not logged in.");
     }
 });
@@ -164,8 +161,6 @@ router.delete("/booking", async(req, res) => {
     try {
         const booking = req.body;
         const user = req.user;
-        console.log(booking);
-        console.log(user);
         await deleteBookingDB(booking.id, user.id);
         result.success = true;
     } catch (e) {
@@ -196,15 +191,11 @@ router.delete("/", async (req, res) =>{
 
 
 
-
-
 router.post("/me", async (req, res)=> {
     try{
      const user = req.body;
-     console.log(user);
      user.id = req.user.id;
      user.usertype = req.user.usertype;
-     console.log(user);
      await updateUser(user);
      res.send();
     } catch (e){
@@ -212,12 +203,6 @@ router.post("/me", async (req, res)=> {
     }
 
 });
-
-
-
-
-
-
 
 async function readUsers(){
     try{
@@ -315,7 +300,6 @@ async function readAllBookings(){
 
 async function deleteUserDB(id) {
     try{
-        console.log(id);
         await pool.query('delete from users where id = ($1)', [id]);
     }
     catch(e){
