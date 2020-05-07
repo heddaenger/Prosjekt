@@ -19,5 +19,5 @@ app.use(express.static('public'));
 app.use('/users', router); //forteller at alle router som starter med /users skal håndteres av våres router fra routes/users.js
 
 
-app.get("/", (req, res) => res.sendFile(`${__dirname}/registration.html`));
+app.get("/", (req, res) => res.sendFile(`${__dirname}/loginPage.html`));
 

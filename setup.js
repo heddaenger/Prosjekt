@@ -17,7 +17,8 @@ id SERIAL PRIMARY KEY,
 seatsChosen INT NOT NULL,
 date DATE NOT NULL, 
 time NUMERIC NOT NULL,
-userId INTEGER REFERENCES Users(id) ON DELETE CASCADE);
+userId INTEGER REFERENCES Users(id) ON DELETE CASCADE,
+userType INTEGER REFERENCES UserTypes(id) ON DELETE CASCADE);   
 
 
 `).then(() => pool.query("INSERT INTO UserTypes (roletype) VALUES ($1)", ['Administrator']))
