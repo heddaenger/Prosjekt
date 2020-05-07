@@ -25,7 +25,6 @@ async function bookingAdmin() {
                     headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest)});
                 const success = await result.json();
                 await bookingAdmin();
-                console.log("reloading");
                 location.reload();
             });
         })
@@ -48,22 +47,6 @@ async function manageUser() {
         "<br> <b>Your Phone: </b>" + uInformation.phone +
         "<br> <b> Your email: </b>" + uInformation.email;
 }
-/*const button = document.getElementById("deleteMe");
-    button.addEventListener("click", async t => {
-              //const jsonRequest = {};
-        console.log("reloading 1");
-              const result = await fetch("http://localhost:3000/users/me", {method: "DELETE",
-              headers: {"content-type": "application/json"}, body: JSON.stringify(uInformation)});
-            console.log("reloading 2");
-              const success = await result.json();
-        console.log("reloading 3");
-        await manageUser();
-        console.log("reloading 4");
-        location.reload();
-        console.log("reloading 5");
-    })
-}
- */
 
 
 
