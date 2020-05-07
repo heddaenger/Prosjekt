@@ -46,6 +46,7 @@ router.post("/", async(req, res) => {
 
         if (is_admin_user && req.body.make_admin === "is_admin") {
             new_user.usertype = 1;
+
         } else {
             new_user.usertype = 2
         }
@@ -226,12 +227,6 @@ router.post("/me", async (req, res)=> {
     }
 
 });
-
-
-
-
-
-
 
 async function readUsers(){
     try{
