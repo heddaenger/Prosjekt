@@ -63,12 +63,14 @@ async function manageAllBookings() {
             const cell3 = row.insertCell(2);
             const cell4 = row.insertCell(3);
             const cell5 = row.insertCell(4);
+            const cell6 = row.insertCell(5);
             cell1.innerHTML = t.id;
             cell2.innerHTML = t.seatschosen;
             cell3.innerHTML = t.date;
             cell4.innerHTML = t.time;
+            cell5.innerHTML = t.usertype;
             const button = document.createElement("button");
-            cell5.appendChild(button);
+            cell6.appendChild(button);
             button.addEventListener("click", async e => {
                 const jsonRequest = {};
                 jsonRequest.id = t.id;
@@ -100,12 +102,14 @@ async function manageAllUsers() {
             const cell3 = row.insertCell(2);
             const cell4 = row.insertCell(3);
             const cell5 = row.insertCell(4);
+            const cell6 = row.insertCell(5);
             cell1.innerHTML = t.id;
             cell2.innerHTML = t.fullname;
             cell3.innerHTML = t.email;
             cell4.innerHTML = t.phone;
+            cell5.innerHTML = t.usertype;
             const button = document.createElement("button");
-            cell5.appendChild(button);
+            cell6.appendChild(button);
             button.addEventListener("click", async e => {
                 const jsonRequest = {};
                 jsonRequest.id = t.id;

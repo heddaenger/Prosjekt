@@ -56,11 +56,9 @@ router.post("/", async(req, res) => {
         }else {
             res.send(JSON.stringify("Invalid phone number or email already in use"));
         }
-        res.send({sucess: success});
-
+        res.send({success: success});
     }
     catch(e){
-        //result.success=false;
     console.log(`${e}`);
     }
     finally{
@@ -192,6 +190,7 @@ router.delete("/", async (req, res) =>{
 });
 
 
+
 router.post("/me", async (req, res)=> {
     try{
      const user = req.body;
@@ -254,8 +253,8 @@ async function readBooking(user_id){
 
 async function createBooking(user, bookings){
     try{
-        await pool.query("INSERT INTO bookings (seatsChosen, date, time, userid) VALUES ($1, $2, $3, $4)",
-            [bookings.seatsChosen, bookings.date, bookings.time, user.id]);
+        await pool.query("INSERT INTO bookings (seatsChosen, date, time, userid, usertype) VALUES ($1, $2, $3, $4, $5)",
+            [bookings.seatsChosen, bookings.date, bookings.time, user.id, user.usertype]);
         return true;
     }catch(e) {
         console.log(`${e}`)
