@@ -56,8 +56,7 @@ router.post("/", async(req, res) => {
         }else {
             res.send(JSON.stringify("Invalid phone number or email already in use"));
         }
-        res.send({sucess: success});
-
+        res.send({success: success});
     }
     catch(e){
     console.log(`${e}`);
@@ -189,6 +188,7 @@ router.delete("/", async (req, res) =>{
         res.status(500).send();
     }
 });
+
 
 
 router.post("/me", async (req, res)=> {
