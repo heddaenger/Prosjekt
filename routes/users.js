@@ -25,9 +25,16 @@ router.use((req, res, next) => {
 
 //Henter alle brukerne i databasen og sender de som JSON-objekter
 router.get("/", async(req, res) => {
+    const user = req.user;
+    const usertype = user.usertype;
+    if (usertype === 1){
     const rows = await readUsers();
     res.setHeader("content-type", "application/json");
     res.send(JSON.stringify(rows))
+    }
+    else if (usertype === 2){
+        res.status(403).send("Not allowed");
+    }
 });
 
 
@@ -201,7 +208,6 @@ router.post("/me", async (req, res)=> {
     } catch (e){
         console.log(`${e}`);
     }
-
 });
 
 async function readUsers(){
@@ -217,7 +223,6 @@ async function readUsers(){
 //legger inn informasjonen i en database
 async function createUsers(user) {
     try {
-        console.log(user);
         let status = false;
         await pool.query("INSERT INTO users (fullName, email, password, phone, usertype) VALUES ($1, $2, $3, $4, $5)",
             [user.fname, user.email, user.password, user.phone, user.usertype]).then(s => {status = true; console.log(s);})
