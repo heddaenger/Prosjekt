@@ -53,7 +53,7 @@ async function manageUser() {
 async function manageAllBookings() {
     try{
         const allBookings = document.getElementById("allBookings");
-        const result = await fetch("http://localhost:3000/users/allBookings", {method:"GET", mode: 'no-cors'});
+        const result = await fetch("http://localhost:3000/users/allBookings", {method:"GET"});
         const aBInformation = await result.json();
         aBInformation.forEach(t=>{
 
@@ -63,20 +63,17 @@ async function manageAllBookings() {
             const cell3 = row.insertCell(2);
             const cell4 = row.insertCell(3);
             const cell5 = row.insertCell(4);
-            const cell6 = row.insertCell(5);
             cell1.innerHTML = t.id;
             cell2.innerHTML = t.seatschosen;
             cell3.innerHTML = t.date;
             cell4.innerHTML = t.time;
-            cell5.innerHTML = t.usertype;
             const button = document.createElement("button");
-            cell6.appendChild(button);
+            cell5.appendChild(button);
             button.addEventListener("click", async e => {
                 const jsonRequest = {};
                 jsonRequest.id = t.id;
-                const result = await fetch("http://localhost:3000/users/allBookings", {method: "DELETE",
+                const result = await fetch("http://localhost:3000/users/booking", {method: "DELETE",
                     headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest)});
-                const success = await result.json();
                 await manageAllBookings();
                 location.reload();
             });
@@ -133,7 +130,7 @@ async function logout() {
 }
 
 module.exports.bookingAdmin = bookingAdmin;
+module.exports.manageUser = manageUser;
 module.exports.manageAllBookings = manageAllBookings;
 module.exports.manageAllUsers = manageAllUsers;
-module.exports.manageUser = manageUser;
 module.exports.logout = logout;

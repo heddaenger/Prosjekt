@@ -39,7 +39,7 @@ router.get("/", async(req, res) => {
 
 
 
-/*Bruker funksjonen createUsers til å lagre brukeren i DB. Dersom det er en admin logget inn og brukeren requester å bli admin,
+/*Bruker funksjonen createUser til å lagre brukeren i DB. Dersom det er en admin logget inn og brukeren requester å bli admin,
 kan adminen godkjenne dette og gjøre brukeren til admin. */
 router.post("/", async(req, res) => {
     try{
@@ -57,7 +57,7 @@ router.post("/", async(req, res) => {
         } else {
             new_user.usertype = 2
         }
-        const success = await createUsers(new_user);
+        const success = await createUser(new_user);
         if(success){
             res.redirect('/loginPage.html');
         }else {
@@ -66,10 +66,7 @@ router.post("/", async(req, res) => {
         res.send({success: success});
     }
     catch(e){
-    console.log(`${e}`);
-    }
-    finally{
-        res.redirect('/loginPage.html');
+    res.status(500).send("Error");
     }
 });
 
@@ -91,13 +88,13 @@ router.post('/login', async(req, res) => {
         }
         res.send()
     } catch (e) {
-        console.log(`${e}`);
         res.status(403).send("Incorrect username or password.");
-    }
-    finally {
     }
 });
 
+
+    
+//poster på log out. fjerner cookie.
 router.post('/logout', async(req,res) => {
     try{
         const user = req.user;
@@ -111,7 +108,7 @@ router.post('/logout', async(req,res) => {
 
 
 
-//dette endpointet henter informasjonen om hver enkelt bruker. Denne informasjonen innbærer ikke passord eller id.
+//dette endpointet henter informasjonen om hver enkelt bruker.
 router.get('/me', async (req,res) =>{
         const user = req.user;
         delete user.password;
@@ -121,7 +118,7 @@ router.get('/me', async (req,res) =>{
 
 
 
-//dette endpointet bruker funksjonen createBooking til å lagre bookings i DB.
+//createBooking til å lagre bookings i DB.
 router.post("/booking", async(req, res) => {
     try{
         const user = req.user;
@@ -146,7 +143,7 @@ router.get("/booking", async(req, res) => {
 
 
 
-//Henter alle bookingsene i DB for å vise dem til adminen. Dersom noen som ikke er admins er på siden vil de få en 403.
+//Henter alle bookingsene i DB for å vise dem til adminen. Dersom ikke admin, få en 403.
 router.get("/allBookings", async(req, res) => {
          const user = req.user;
          const usertype = user.usertype;
@@ -168,8 +165,21 @@ router.delete("/booking", async(req, res) => {
     try {
         const booking = req.body;
         const user = req.user;
-        await deleteBookingDB(booking.id, user.id);
-        result.success = true;
+        let allow_delete = false;
+        if (user.usertype === 1) {
+            allow_delete = true;
+        } else {
+            const userBookings = await getUserBookings(user.id);
+            if (userBookings.indexOf(booking.id) !== -1) {
+                allow_delete = true;
+            }
+        }
+        if (allow_delete) {
+            await deleteBookingDB(booking.id);
+            result.success = true;
+        } else {
+            res.status(403).send();
+        }
     } catch (e) {
         result.success = false;
     } finally {
@@ -180,7 +190,29 @@ router.delete("/booking", async(req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//sletter brukeren fra DB
 router.delete("/", async (req, res) =>{
+    console.log("Entering delete user");
     try{
         const user_id = req.body.id;
         const user = req.user;
@@ -221,7 +253,7 @@ async function readUsers(){
 
 
 //legger inn informasjonen i en database
-async function createUsers(user) {
+async function createUser(user) {
     try {
         let status = false;
         await pool.query("INSERT INTO users (fullName, email, password, phone, usertype) VALUES ($1, $2, $3, $4, $5)",
@@ -256,10 +288,10 @@ async function readBooking(user_id){
 
 
 
-async function createBooking(user, bookings){
+async function createBooking(user, booking){
     try{
         await pool.query("INSERT INTO bookings (seatsChosen, date, time, userid, usertype) VALUES ($1, $2, $3, $4, $5)",
-            [bookings.seatsChosen, bookings.date, bookings.time, user.id, user.usertype]);
+            [booking.seatsChosen, booking.date, booking.time, user.id, user.usertype]);
         return true;
     }catch(e) {
         console.log(`${e}`)
@@ -290,7 +322,17 @@ async function readAllBookings(){
     }
 }
 
-
+ async function getUserBookings(user_id) {
+    try {
+        console.log(user_id);
+        const result = await pool.query("SELECT id FROM bookings WHERE userid = ($1)", [user_id]);
+        console.log(result.rowCount);
+        let userBookings = [];
+        return result.rows.map(item => item.id);
+    } catch (e) {
+        console.log(e);
+    }
+ }
 
  async function deleteBookingDB(id) {
     try {
