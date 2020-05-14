@@ -1,14 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
+
+//require the jwt-tokens we use as cookies
 const jwt = require('jsonwebtoken');
 const secret = 'verysecret';
 
+//import pool from index.js
 const pool = require(".");
 
 
 
-//
+//adds a cookie to req.user
 router.use((req, res, next) => {
     if (req.cookies && req.cookies['jwt-token']) {
         const decoded = jwt.verify(req.cookies['jwt-token'], secret);
@@ -23,7 +26,7 @@ router.use((req, res, next) => {
 
 
 
-//Henter alle brukerne i databasen og sender de som JSON-objekter
+//gets all the users, endpoint is not allowed if usertype is 2
 router.get("/", async(req, res) => {
     const user = req.user;
     const usertype = user.usertype;
@@ -39,8 +42,7 @@ router.get("/", async(req, res) => {
 
 
 
-/*Bruker funksjonen createUsers til å lagre brukeren i DB. Dersom det er en admin logget inn og brukeren requester å bli admin,
-kan adminen godkjenne dette og gjøre brukeren til admin. */
+// posts a user to the database using createUser(). to make admin, an admin must be logged in. redirect to loginpage.
 router.post("/", async(req, res) => {
     try{
         let is_admin_user = false;
@@ -57,7 +59,7 @@ router.post("/", async(req, res) => {
         } else {
             new_user.usertype = 2
         }
-        const success = await createUsers(new_user);
+        const success = await createUser(new_user);
         if(success){
             res.redirect('/loginPage.html');
         }else {
@@ -66,24 +68,21 @@ router.post("/", async(req, res) => {
         res.send({success: success});
     }
     catch(e){
-    console.log(`${e}`);
-    }
-    finally{
-        res.redirect('/loginPage.html');
+    res.status(500).send("Error");
     }
 });
 
 
 
+//checks if username and password matches, if yes: add cookie and log in. redirect to admin / mypage.
 router.post('/login', async(req, res) => {
-    //sjekk brukernavn og passord mot databasen - hvis korrekt:
     const user = req.body;
     try {
         const user_id = await getUserId(user.email, user.password);
         const result = await pool.query('SELECT * FROM "users" WHERE id = $1', [user_id]);
         const usertype = result.rows[0].usertype;
         const token = jwt.sign({user_id: user_id}, secret);
-        res.cookie('jwt-token', token); //cookie for å holde styr på hvem som er logget inn
+        res.cookie('jwt-token', token); //the cookie
         if(usertype === 1){
             res.redirect('/AdminPage.html');
         }else if(usertype === 2) {
@@ -91,13 +90,13 @@ router.post('/login', async(req, res) => {
         }
         res.send()
     } catch (e) {
-        console.log(`${e}`);
         res.status(403).send("Incorrect username or password.");
-    }
-    finally {
     }
 });
 
+
+    
+//logs out by removing cookie and redirect to loginpage.
 router.post('/logout', async(req,res) => {
     try{
         const user = req.user;
@@ -111,7 +110,7 @@ router.post('/logout', async(req,res) => {
 
 
 
-//dette endpointet henter informasjonen om hver enkelt bruker. Denne informasjonen innbærer ikke passord eller id.
+//gets the information about the user logged in, expect password and id.
 router.get('/me', async (req,res) =>{
         const user = req.user;
         delete user.password;
@@ -121,7 +120,7 @@ router.get('/me', async (req,res) =>{
 
 
 
-//dette endpointet bruker funksjonen createBooking til å lagre bookings i DB.
+//posts to bookings using createBooking(). registers booking to logged in user.
 router.post("/booking", async(req, res) => {
     try{
         const user = req.user;
@@ -136,7 +135,7 @@ router.post("/booking", async(req, res) => {
 });
 
 
-//Henter bookings fra DB og viser brukeren hvilke bookings de har.
+//gets the bookings for the user logged in using readBooking().
 router.get("/booking", async(req, res) => {
     const user_id = req.user.id;
     const rows = await readBooking(user_id);
@@ -146,7 +145,7 @@ router.get("/booking", async(req, res) => {
 
 
 
-//Henter alle bookingsene i DB for å vise dem til adminen. Dersom noen som ikke er admins er på siden vil de få en 403.
+//gets all the bookings. only allowed for usertype 1. using readAllBookings().
 router.get("/allBookings", async(req, res) => {
          const user = req.user;
          const usertype = user.usertype;
@@ -162,14 +161,27 @@ router.get("/allBookings", async(req, res) => {
 
 
 
-//Sletter bookings i DB
+//deletes users bookings (only allowed admin) using getUserBookings() to see them and deleteBookingDB to delete.
 router.delete("/booking", async(req, res) => {
     let result = {};
     try {
         const booking = req.body;
         const user = req.user;
-        await deleteBookingDB(booking.id, user.id);
-        result.success = true;
+        let allow_delete = false;
+        if (user.usertype === 1) { //the code that only allows admin
+            allow_delete = true;
+        } else {
+            const userBookings = await getUserBookings(user.id);
+            if (userBookings.indexOf(booking.id) !== -1) {
+                allow_delete = true;
+            }
+        }
+        if (allow_delete) {
+            await deleteBookingDB(booking.id);
+            result.success = true;
+        } else {
+            res.status(403).send();
+        }
     } catch (e) {
         result.success = false;
     } finally {
@@ -180,9 +192,10 @@ router.delete("/booking", async(req, res) => {
 
 
 
+//deletes users using deleteUserDB. only allowed for admin.
 router.delete("/", async (req, res) =>{
     try{
-        const user_id = req.body.id;
+        const user_id = req.body.id; //gets the userid from the body
         const user = req.user;
         if (user.usertype !== 1) {
             res.status(403).send("You do not have the privileges to delete users.");
@@ -197,7 +210,7 @@ router.delete("/", async (req, res) =>{
 });
 
 
-
+//updates the logged in user using updateUser().
 router.post("/me", async (req, res)=> {
     try{
      const user = req.body;
@@ -210,6 +223,12 @@ router.post("/me", async (req, res)=> {
     }
 });
 
+//
+
+
+
+
+//selects all the users from the DB.
 async function readUsers(){
     try{
         const results = await pool.query("SELECT * FROM users");
@@ -220,8 +239,12 @@ async function readUsers(){
 }
 
 
-//legger inn informasjonen i en database
-async function createUsers(user) {
+
+
+
+
+//inserts all the information about the user into the DB.
+async function createUser(user) {
     try {
         let status = false;
         await pool.query("INSERT INTO users (fullName, email, password, phone, usertype) VALUES ($1, $2, $3, $4, $5)",
@@ -234,6 +257,7 @@ async function createUsers(user) {
 }
 
 
+//updates logged in user in DB
 async function updateUser(user){
     try {
         await pool.query("UPDATE users SET fullName=($1), password=($2), phone=($3) WHERE id=($4)",
@@ -244,7 +268,7 @@ async function updateUser(user){
     }
 }
 
-
+//selects bookings from the logged in user
 async function readBooking(user_id){
     try{
         const results = await pool.query("SELECT * FROM bookings WHERE userid = $1", [user_id]);
@@ -255,11 +279,11 @@ async function readBooking(user_id){
 }
 
 
-
-async function createBooking(user, bookings){
+//inserts bookings into DB. registers on logged in user
+async function createBooking(user, booking){
     try{
         await pool.query("INSERT INTO bookings (seatsChosen, date, time, userid, usertype) VALUES ($1, $2, $3, $4, $5)",
-            [bookings.seatsChosen, bookings.date, bookings.time, user.id, user.usertype]);
+            [booking.seatsChosen, booking.date, booking.time, user.id, user.usertype]);
         return true;
     }catch(e) {
         console.log(`${e}`)
@@ -267,10 +291,11 @@ async function createBooking(user, bookings){
 }
 
 
+//selects user where password and email is matching
 async function getUserId(email, password) {
     try {
         const result = await pool.query("SELECT id FROM users WHERE password = ($1) AND email = ($2)", [password, email]);
-        if (result.rowCount === 1) {
+        if (result.rowCount === 1) { //has to have both password and email
             return result.rows[0].id;
         } else {
             throw "User not found";
@@ -279,7 +304,7 @@ async function getUserId(email, password) {
 
 }
 
-
+//select all bookings
 async function readAllBookings(){
     try{
         const results = await pool.query("SELECT * FROM bookings");
@@ -291,7 +316,19 @@ async function readAllBookings(){
 }
 
 
+//selects bookings from user logged in.
+ async function getUserBookings(user_id) {
+    try {
+        const result = await pool.query("SELECT id FROM bookings WHERE userid = ($1)", [user_id]);
+        let userBookings = [];
+        return result.rows.map(item => item.id);
+    } catch (e) {
+        console.log(e);
+    }
+ }
 
+
+ //deletes booking from DB
  async function deleteBookingDB(id) {
     try {
         pool.query("delete from bookings where id = ($1)", [id]).then(function(result) {
@@ -303,6 +340,8 @@ async function readAllBookings(){
     }
 }
 
+
+//deletes user from DB
 async function deleteUserDB(id) {
     try{
         await pool.query('delete from users where id = ($1)', [id]);
@@ -313,7 +352,7 @@ async function deleteUserDB(id) {
 }
 
 
-
+//exports the router
 module.exports = router;
 
 

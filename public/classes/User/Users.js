@@ -23,23 +23,6 @@ function addUserInfo () {
         info = new user(document.getElementById("fullName").value, document.getElementById("email").value,
         document.getElementById("password").value, document.getElementById("phoneNumber").value);
 
-        //function that stores the userinfo into an array in localstorage
-    function storeLogin (values) {
-
-        //Defining a binding. Getting the key info from localstorage and uses JSON.parse method to get as object instead of a string
-        values = JSON.parse(localStorage.getItem("info"));
-
-        //If statement that checks if LocalStorage item bookings does not exist and reassigns values to an empty array.
-        //in this way we prevents javascript from overwriting data in our array in localstorage by only making a new array if userbookings does not exist
-        //consequently we are utilizing our existing values array to store several objects
-        if (values === null) {
-            values = [];
-        }
-        //Pushes values of localstorage item bookings into empty array
-        values.push(info);
-        //stores values of values of array to local storage and sets assigns key "info" to the array
-        localStorage.setItem("info", JSON.stringify(values));
-    }
 
     //Binds variables to html-input
     password = document.getElementById("password");
