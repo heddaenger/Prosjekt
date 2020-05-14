@@ -125,6 +125,7 @@ catch (e){
     }
 }
 
+
 //posts to the endpoint logout.
 async function logout() {
     await fetch('http://localhost:3000/users/logout', { method: 'POST', credentials: 'same-origin' })
