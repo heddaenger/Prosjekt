@@ -1,3 +1,4 @@
+//shows users bookings and deletes them
 async function bookingAdmin() {
     try{
         const table = document.getElementById("itemTable");
@@ -16,9 +17,9 @@ async function bookingAdmin() {
             cell2.innerHTML = t.seatschosen;
             cell3.innerHTML = t.date;
             cell4.innerHTML = t.time;
-            const button = document.createElement("button");
+            const button = document.createElement("button"); //creates the button
             cell5.appendChild(button);
-            button.addEventListener("click", async e => {
+            button.addEventListener("click", async e => { //adds the event that on click, deletes from side
                 const jsonRequest = {};
                 jsonRequest.id = t.id;
                 const result = await fetch("http://localhost:3000/users/booking", {method: "DELETE",
