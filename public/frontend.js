@@ -19,7 +19,7 @@ async function bookingAdmin() {
             cell4.innerHTML = t.time;
             const button = document.createElement("button"); //creates the button
             cell5.appendChild(button);
-            button.addEventListener("click", async e => { //adds the event that on click, deletes from side
+            button.addEventListener("click", async e => { //adds the event that on click: deletes from side
                 const jsonRequest = {};
                 jsonRequest.id = t.id;
                 const result = await fetch("http://localhost:3000/users/booking", {method: "DELETE",
@@ -35,7 +35,7 @@ async function bookingAdmin() {
     }
 }
 
-
+//shows the info about the user logged in.
 async function manageUser() {
     const myDiv = document.getElementById("myInformation");
 
@@ -50,7 +50,7 @@ async function manageUser() {
 }
 
 
-
+//does the same as bookingAdmin, only for admins.
 async function manageAllBookings() {
     try{
         const allBookings = document.getElementById("allBookings");
@@ -86,7 +86,7 @@ async function manageAllBookings() {
 }
 
 
-
+//shows and deletes users for admin.
 async function manageAllUsers() {
     try{
         const allUsers = document.getElementById("allUsers");
@@ -125,11 +125,12 @@ catch (e){
     }
 }
 
-
+//posts to the endpoint logout.
 async function logout() {
     await fetch('http://localhost:3000/users/logout', { method: 'POST', credentials: 'same-origin' })
 }
 
+//exports all the functions to the HTML.
 module.exports.bookingAdmin = bookingAdmin;
 module.exports.manageUser = manageUser;
 module.exports.manageAllBookings = manageAllBookings;

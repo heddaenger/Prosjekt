@@ -95,7 +95,7 @@ router.post('/login', async(req, res) => {
 });
 
 
-    
+
 //logs out by removing cookie and redirect to loginpage.
 router.post('/logout', async(req,res) => {
     try{
@@ -106,7 +106,6 @@ router.post('/logout', async(req,res) => {
         res.status(403).send("User not logged in.");
     }
 });
-
 
 
 
@@ -133,6 +132,7 @@ router.post("/booking", async(req, res) => {
         res.redirect('/bookingConfirmation.html');
     }
 });
+
 
 
 //gets the bookings for the user logged in using readBooking().
@@ -210,6 +210,7 @@ router.delete("/", async (req, res) =>{
 });
 
 
+
 //updates the logged in user using updateUser().
 router.post("/me", async (req, res)=> {
     try{
@@ -223,8 +224,9 @@ router.post("/me", async (req, res)=> {
     }
 });
 
-//
 
+
+// now comes all our back-end functions
 
 
 
@@ -237,10 +239,6 @@ async function readUsers(){
         return [];
     }
 }
-
-
-
-
 
 
 //inserts all the information about the user into the DB.
@@ -267,6 +265,7 @@ async function updateUser(user){
         console.log(`${e}`);
     }
 }
+
 
 //selects bookings from the logged in user
 async function readBooking(user_id){
@@ -303,6 +302,7 @@ async function getUserId(email, password) {
     } finally {}
 
 }
+
 
 //select all bookings
 async function readAllBookings(){
